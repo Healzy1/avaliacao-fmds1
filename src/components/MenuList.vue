@@ -19,21 +19,45 @@
       :value="item.value"
       :to="item.to"
     ></v-list-item>
+
+    <v-divider></v-divider>
+
+    <v-list-item @click="toggleTheme">
+      <template v-slot:prepend>
+        <v-icon :icon="theme.global.current.value.dark ? 'mdi-weather-night' : 'mdi-weather-sunny'"></v-icon>
+      </template>
+      <v-list-item-title>
+        {{ theme.global.current.value.dark ? 'Modo Escuro' : 'Modo Claro' }}
+      </v-list-item-title>
+    </v-list-item>
   </v-list>
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
+import { useTheme } from 'vuetify';
 
-// Define que este componente aceita a propriedade 'rail'
 defineProps({
   rail: Boolean
 });
 
-// Define o evento que o componente pode emitir
 defineEmits(['toggle-rail']);
 
-// Array de dados para os itens do menu
+const theme = useTheme();
+
+const toggleTheme = () => {
+  const newTheme = theme.global.current.value.dark ? 'light' : 'dark';
+  theme.global.name.value = newTheme;
+  localStorage.setItem('theme', newTheme);
+};
+
+onMounted(() => {
+  const savedTheme = localStorage.getItem('theme');
+  if (savedTheme) {
+    theme.global.name.value = savedTheme;
+  }
+});
+
 const menuItems = ref([
   { title: 'Início', icon: 'mdi-home', value: 'inicio', to: '/' },
   { title: 'CRUD (Tabela)', icon: 'mdi-table', value: 'crud', to: '/crud' },

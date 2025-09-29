@@ -15,6 +15,7 @@ export default function useFilmes() {
         // O novo filme terá o maior id + 1
         const filmeComId = { ...novoFilme, id: maiorId + 1 };
         filmes.value.push(filmeComId);
+        return filmeComId;
     };
 
     // FUnção para atualizar um filme
@@ -32,7 +33,7 @@ export default function useFilmes() {
 
     // Watch para salvar no local storage sempre que 'filmes' mudar
     watch(filmes, (novoValor) => {
-        localStorage.setItem('meus_filmes', JSON.stringify(novaLista));
+        localStorage.setItem('meus_filmes', JSON.stringify(novoValor));
     }, { deep: true });
 
     // Retornar as referências e funções para que possam ser usadas em componentes

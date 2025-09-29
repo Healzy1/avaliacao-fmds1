@@ -13,6 +13,9 @@ import App from './App.vue'
 // Composables
 import { createApp } from 'vue'
 
+// Styles do main css
+import '@/styles/main.css';
+
 // Styles
 import 'unfonts.css'
 

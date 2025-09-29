@@ -1,0 +1,13 @@
+/*
+  Este estilo será aplicado ao corpo principal da aplicação.
+  Ele cria um gradiente diagonal sutil usando as cores do tema do Vuetify.
+*/
+.v-application {
+  background: linear-gradient(
+    to top right, 
+    rgb(var(--v-theme-surface)), 
+    rgb(var(--v-theme-background))
+  );
+  /* 'fixed' garante que o gradiente não role junto com o conteúdo da página */
+  background-attachment: fixed;
+}
