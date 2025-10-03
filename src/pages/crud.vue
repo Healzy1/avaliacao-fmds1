@@ -108,7 +108,7 @@
 import { ref, computed, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 import useFilmes from '@/composables/useFilmes';
-import FilmeFormDialog from '@/components/aaaaaaaaaaaaaFilmeFormDialog.vue';
+import FilmeFormDialog from '@/components/FilmeFormDialog.vue';
 import ConfirmDialog from '@/components/ConfirmDialog.vue';
 
 const snackbar = ref({ visible: false, text: '', color: '' });
