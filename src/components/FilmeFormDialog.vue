@@ -56,10 +56,9 @@ const props = defineProps({
   dialog: Boolean,
   item: Object
 });
-////
+
 const emit = defineEmits(['update:dialog', 'salvar']);
 
-// 3. Criamos uma referência para o nosso formulário
 const form = ref(null);
 const filmeEditado = ref({});
 
@@ -67,11 +66,8 @@ const formTitle = computed(() => {
   return props.item && props.item.id ? 'Editar Filme' : 'Novo Filme';
 });
 
-// 4. Criamos nosso array de regras de validação para a nota
 const notaRules = [
-  // Regra 1: Verifica se o campo não está vazio
   v => !!v || 'Nota é obrigatória.',
-  // Regra 2: Verifica se o valor está entre 0 e 10
   v => (v >= 0 && v <= 10) || 'A nota deve ser entre 0 e 10.',
 ];
 
@@ -79,15 +75,11 @@ watch(() => props.item, (novoItem) => {
   filmeEditado.value = { ...novoItem };
 }, { immediate: true });
 
-// 5. Modificamos a função 'salvar' para verificar a validação
 const salvar = async () => {
-  // Acionamos a validação de todos os campos do formulário
   const { valid } = await form.value.validate();
 
-  // Se o formulário for válido, emitimos o evento 'salvar'
   if (valid) {
     emit('salvar', filmeEditado.value);
-    fechar();
   }
 };
 

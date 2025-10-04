@@ -57,7 +57,7 @@ defineProps({
   }
 });
 
-// Reutilizamos a mesma lógica de cores para os chips de gênero
+// Gera uma cor determinística para cada gênero a partir do nome.
 const colors = ['primary', 'secondary', 'success', 'warning', 'error', 'info', 'deep-purple-accent-4', 'pink-accent-3', 'teal', 'orange'];
 const getColorForGenre = (genero) => {
   if (!genero) return 'grey';

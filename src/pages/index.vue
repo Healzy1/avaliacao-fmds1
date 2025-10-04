@@ -62,5 +62,4 @@
 </template>
 
 <script setup>
-  // Nenhuma lógica de script é necessária para esta página
 </script>

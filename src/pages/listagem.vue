@@ -62,10 +62,8 @@ import { ref, computed } from 'vue';
 import useFilmes from '@/composables/useFilmes';
 import FilmeCard from '@/components/FilmeCard.vue';
 
-// Pegando a lista de filmes do nosso "cérebro"
 const { filmes } = useFilmes();
 
-// Variáveis reativas para controlar a busca e a ordenação
 const termoBusca = ref('');
 const ordenacao = ref('titulo-asc');
 const opcoesOrdenacao = ref([
@@ -75,19 +73,15 @@ const opcoesOrdenacao = ref([
   { texto: 'Nota (Menor para Maior)', valor: 'nota-asc' },
 ]);
 
-// A MÁGICA ACONTECE AQUI: Propriedade Computada
-// Esta função é re-executada automaticamente sempre que 'filmes', 'termoBusca' ou 'ordenacao' mudar.
 const filmesFiltradosEOrdenados = computed(() => {
   let filmesProcessados = [...filmes.value];
 
-  // 1. Filtragem pela Busca
   if (termoBusca.value) {
     filmesProcessados = filmesProcessados.filter(filme =>
       filme.titulo.toLowerCase().includes(termoBusca.value.toLowerCase())
     );
   }
 
-  // 2. Ordenação
   switch (ordenacao.value) {
     case 'titulo-asc':
       filmesProcessados.sort((a, b) => a.titulo.localeCompare(b.titulo));

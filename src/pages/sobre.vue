@@ -106,37 +106,32 @@ import useFilmes from '@/composables/useFilmes';
 
 const { filmes } = useFilmes();
 
-// --- COMPUTEDS EXISTENTES ---
 const totalFilmes = computed(() => filmes.value.length);
 
 const filmesPorGenero = computed(() => {
   return filmes.value.reduce((acc, filme) => {
+    // Sanitiza o nome do gênero para agrupar de forma consistente (ex: "Ação" e " ação " viram "Ação").
     let genero = filme.genero?.trim() || 'Não categorizado';
     genero = genero.charAt(0).toUpperCase() + genero.slice(1).toLowerCase();
+    
     if (!acc[genero]) acc[genero] = 0;
     acc[genero]++;
     return acc;
   }, {});
 });
 
-
-// --- NOVAS COMPUTEDS PARA ESTATÍSTICAS ---
-
-// 1. Média Geral de Notas
 const mediaGeralNotas = computed(() => {
   if (totalFilmes.value === 0) return 'N/A';
   const soma = filmes.value.reduce((acc, filme) => acc + Number(filme.nota), 0);
   return (soma / totalFilmes.value).toFixed(1);
 });
 
-// 2. Gênero Favorito (Mais Cadastrado)
 const generoFavorito = computed(() => {
   const generos = filmesPorGenero.value;
   if (Object.keys(generos).length === 0) return 'N/A';
   return Object.keys(generos).reduce((a, b) => generos[a] > generos[b] ? a : b);
 });
 
-// 3. Filmes com Maior e Menor Nota
 const melhoresFilmes = computed(() => {
   if (totalFilmes.value === 0) return { nota: 'N/A', filmes: [] };
   const maxNota = Math.max(...filmes.value.map(f => f.nota));
@@ -155,7 +150,6 @@ const pioresFilmes = computed(() => {
   };
 });
 
-// 4. Média de Nota por Gênero
 const mediaPorGenero = computed(() => {
   const generos = {};
   filmes.value.forEach(filme => {
@@ -175,7 +169,6 @@ const mediaPorGenero = computed(() => {
   return medias;
 });
 
-// 5. Distribuição das Notas
 const distribuicaoNotas = computed(() => {
   const faixas = {
     'Excelentes (9-10)': { contagem: 0, cor: 'success' },

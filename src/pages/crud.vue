@@ -117,19 +117,24 @@ const showSnackbar = (text, color) => {
   snackbar.value.color = color;
   snackbar.value.visible = true;
 };
+
 const { filmes, adicionarFilme, atualizarFilme, removerFilme } = useFilmes();
 const route = useRoute();
+
 const highlightedId = ref(null);
 const flashingId = ref(null);
 const dialogVisivel = ref(false);
 const itemSelecionado = ref(null);
 const dialogDelete = ref(false);
+
 const headers = ref([
   { title: 'Título', align: 'start', key: 'titulo', width: '40%' },
   { title: 'Gênero', align: 'center', key: 'genero' },
   { title: 'Nota', align: 'center', key: 'nota' },
   { title: 'Ações', align: 'center', key: 'actions', sortable: false },
 ]);
+
+// Ao montar a página, verifica se um ID foi passado na URL para o destaque inicial.
 onMounted(() => {
   const idFromQuery = Number(route.query.id);
   if (idFromQuery) {
@@ -139,6 +144,9 @@ onMounted(() => {
     }, 3000);
   }
 });
+
+// Aplica classes dinâmicas às linhas da tabela para os efeitos visuais.
+// A prioridade é: piscar > destacar.
 const getRowProps = ({ item }) => {
   const props = { class: '' };
   if (item.id === flashingId.value) {
@@ -149,14 +157,17 @@ const getRowProps = ({ item }) => {
   }
   return props;
 };
+
 const abrirDialogParaAdicionar = () => {
   itemSelecionado.value = {};
   dialogVisivel.value = true;
 };
+
 const abrirDialogParaEditar = (item) => {
   itemSelecionado.value = { ...item };
   dialogVisivel.value = true;
 };
+
 const salvarFilme = (item) => {
   let savedItem;
   if (item.id) {
@@ -167,23 +178,29 @@ const salvarFilme = (item) => {
   }
   dialogVisivel.value = false;
   itemSelecionado.value = null;
+  
   flashingId.value = savedItem.id;
   setTimeout(() => {
     flashingId.value = null;
   }, 1500);
+
   showSnackbar('Filme salvo com sucesso!', 'success');
 };
+
 const abrirDialogDeRemocao = (item) => {
   itemSelecionado.value = item;
   dialogDelete.value = true;
 };
+
 const confirmarRemocao = () => {
   removerFilme(itemSelecionado.value.id);
   dialogDelete.value = false;
   itemSelecionado.value = null;
+  
   showSnackbar('Filme removido.', 'info');
 };
 
+// Gera uma cor determinística para cada gênero a partir do nome.
 const colors = ['primary', 'secondary', 'success', 'warning', 'error', 'info', 'deep-purple-accent-4', 'pink-accent-3', 'teal', 'orange'];
 const getColorForGenre = (genero) => {
   if (!genero) return 'grey';
@@ -195,6 +212,7 @@ const getColorForGenre = (genero) => {
   return colors[index];
 };
 
+// Define a cor da barra de progresso com base na nota do filme.
 const getNotaColor = (nota) => {
   if (nota >= 8) return 'success';
   if (nota >= 5) return 'warning';
