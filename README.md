@@ -29,7 +29,7 @@ T3. Biblioteca de Jogos/Filmes: CRUD de itens (título, gênero, nota); listagem
 
 2.  **Navegue até a pasta do projeto:**
     ```bash
-    cd movie-checker
+    cd avaliacao-fmds1
     ```
 
 3.  **Instale as dependências:**

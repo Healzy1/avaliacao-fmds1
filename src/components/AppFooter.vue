@@ -34,7 +34,7 @@
       title: 'GitHub do Desenvolvedor 1',
       icon: `mdi-github`,
       href: 'https://github.com/healzy1',
-    }, // Adicionado a vírgula que faltava
+    },
     {
       title: 'GitHub do Desenvolvedor 2',
       icon: `mdi-github`,
@@ -43,7 +43,7 @@
   ]
 </script>
 
-<style scoped> /* Convertido de SASS para CSS padrão */
+<style scoped>
 .social-link :deep(.v-icon) {
   color: rgba(var(--v-theme-on-background), var(--v-disabled-opacity));
   text-decoration: none;
@@ -51,7 +51,6 @@
 }
 
 .social-link:hover :deep(.v-icon) {
-  /* Usando a cor primária do tema para o hover */
   color: rgb(var(--v-theme-primary));
 }
 </style>

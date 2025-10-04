@@ -27,7 +27,7 @@
         <v-icon :icon="theme.global.current.value.dark ? 'mdi-weather-night' : 'mdi-weather-sunny'"></v-icon>
       </template>
       <v-list-item-title>
-        {{ theme.global.current.value.dark ? 'Modo Escuro' : 'Modo Claro' }}
+        {{ theme.global.current.value.dark ? 'Tema Escuro' : 'Tema Claro' }}
       </v-list-item-title>
     </v-list-item>
   </v-list>
@@ -60,8 +60,8 @@ onMounted(() => {
 
 const menuItems = ref([
   { title: 'Início', icon: 'mdi-home', value: 'inicio', to: '/' },
-  { title: 'CRUD (Tabela)', icon: 'mdi-table', value: 'crud', to: '/crud' },
-  { title: 'Listagem (Cards)', icon: 'mdi-view-gallery', value: 'listagem', to: '/listagem' },
+  { title: 'Gerenciar', icon: 'mdi-table', value: 'crud', to: '/crud' },
+  { title: 'Catálogo', icon: 'mdi-view-gallery', value: 'listagem', to: '/listagem' },
   { title: 'Sobre', icon: 'mdi-information', value: 'sobre', to: '/sobre' }
 ]);
 </script>

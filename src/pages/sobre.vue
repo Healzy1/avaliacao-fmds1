@@ -1,58 +1,102 @@
 <template>
   <v-container>
     <div class="mt-2 pb-4">
-      <h1 class="text-h4 font-weight-black">Sobre o Projeto</h1>
+      <h1 class="text-h4 font-weight-black">Dashboard do Catálogo</h1>
       <p class="text-subtitle-1 text-medium-emphasis mb-0">
-        Estatísticas dinâmicas do catálogo de filmes.
+        Uma análise completa dos filmes que você cadastrou.
       </p>
     </div>
     <v-divider class="mb-6"></v-divider>
 
-    <v-row>
+    <v-row dense>
       <v-col cols="12" md="4">
-        <v-card
-          variant="tonal"
-          color="primary"
-          class="d-flex flex-column"
-          height="100%"
-        >
-          <v-card-text class="flex-grow-1 d-flex flex-column justify-center align-center text-center">
-            <div>
-              <v-icon icon="mdi-movie-open-outline" size="48" class="mb-2"></v-icon>
-              <div class="text-h2 font-weight-black">{{ totalFilmes }}</div>
-              <div class="text-h6 font-weight-regular">Filme(s) no Catálogo</div>
-            </div>
-          </v-card-text>
+        <v-card variant="tonal" color="primary" class="d-flex flex-column justify-center text-center" height="150">
+          <v-icon icon="mdi-movie-open-outline" size="32" class="mb-2"></v-icon>
+          <div class="text-h4 font-weight-black">{{ totalFilmes }}</div>
+          <div class="text-body-1">Filme(s) no Catálogo</div>
         </v-card>
       </v-col>
+      <v-col cols="12" md="4">
+        <v-card variant="tonal" color="amber" class="d-flex flex-column justify-center text-center" height="150">
+          <v-icon icon="mdi-star-half-full" size="32" class="mb-2"></v-icon>
+          <div class="text-h4 font-weight-black">{{ mediaGeralNotas }}</div>
+          <div class="text-body-1">Média Geral</div>
+        </v-card>
+      </v-col>
+      <v-col cols="12" md="4">
+        <v-card variant="tonal" color="secondary" class="d-flex flex-column justify-center text-center" height="150">
+          <v-icon icon="mdi-trophy-outline" size="32" class="mb-2"></v-icon>
+          <div class="text-h4 font-weight-black">{{ generoFavorito }}</div>
+          <div class="text-body-1">Gênero Favorito</div>
+        </v-card>
+      </v-col>
+    </v-row>
 
-      <v-col cols="12" md="8">
-        <v-card
-          variant="tonal"
-          height="100%"
-        >
-          <v-card-title>
-            Filmes por Gênero
-          </v-card-title>
-          <v-card-text v-if="Object.keys(filmesPorGenero).length > 0">
-            <div class="d-flex flex-wrap ga-2">
-              <v-chip
-                v-for="(contagem, genero) in filmesPorGenero"
-                :key="genero"
-                :color="getColorForGenre(genero)"
-                variant="elevated"
-                size="large"
-              >
-                {{ genero }}: {{ contagem }}
-              </v-chip>
-            </div>
-          </v-card-text>
-          <v-card-text v-else class="text-grey d-flex align-center justify-center fill-height">
-            <p>Nenhum filme cadastrado para gerar estatísticas.</p>
+    <v-row>
+      <v-col>
+        <v-card variant="tonal" class="mt-4">
+          <v-card-title>Distribuição das Notas</v-card-title>
+          <v-card-text>
+            <v-list>
+              <v-list-item v-for="(item, index) in distribuicaoNotas" :key="index">
+                <v-list-item-title class="font-weight-medium">{{ item.faixa }}</v-list-item-title>
+                <v-list-item-subtitle>{{ item.contagem }} filme(s)</v-list-item-subtitle>
+                <template v-slot:append>
+                  <div style="width: 150px">
+                    <v-progress-linear :model-value="(item.contagem / totalFilmes) * 100" :color="item.cor" height="8" rounded></v-progress-linear>
+                  </div>
+                </template>
+              </v-list-item>
+            </v-list>
           </v-card-text>
         </v-card>
       </v-col>
     </v-row>
+    
+    <v-row>
+      <v-col cols="12" md="6">
+        <v-card variant="tonal" class="mt-4" color="success">
+          <v-card-title>Filme(s) com Maior Nota ({{ melhoresFilmes.nota }})</v-card-title>
+          <v-card-text>
+            <v-chip v-for="filme in melhoresFilmes.filmes" :key="filme.id" class="ma-1">
+              {{ filme.titulo }}
+            </v-chip>
+          </v-card-text>
+        </v-card>
+      </v-col>
+      <v-col cols="12" md="6">
+        <v-card variant="tonal" class="mt-4" color="error">
+          <v-card-title>Filme(s) com Menor Nota ({{ pioresFilmes.nota }})</v-card-title>
+          <v-card-text>
+            <v-chip v-for="filme in pioresFilmes.filmes" :key="filme.id" class="ma-1">
+              {{ filme.titulo }}
+            </v-chip>
+          </v-card-text>
+        </v-card>
+      </v-col>
+    </v-row>
+
+    <v-row>
+      <v-col>
+        <v-card variant="tonal" class="mt-4">
+          <v-card-title>Média de Nota por Gênero</v-card-title>
+          <v-card-text>
+             <v-list>
+              <v-list-item v-for="(media, genero) in mediaPorGenero" :key="genero">
+                <v-list-item-title class="font-weight-medium">{{ genero }}</v-list-item-title>
+                <template v-slot:append>
+                  <div class="d-flex align-center">
+                    <v-rating :model-value="media / 2" color="amber" density="compact" half-increments readonly size="small"></v-rating>
+                    <span class="ms-2 text-body-2 font-weight-bold">({{ media.toFixed(1) }})</span>
+                  </div>
+                </template>
+              </v-list-item>
+            </v-list>
+          </v-card-text>
+        </v-card>
+      </v-col>
+    </v-row>
+
   </v-container>
 </template>
 
@@ -62,29 +106,92 @@ import useFilmes from '@/composables/useFilmes';
 
 const { filmes } = useFilmes();
 
-const totalFilmes = computed(() => {
-  return filmes.value.length;
-});
+// --- COMPUTEDS EXISTENTES ---
+const totalFilmes = computed(() => filmes.value.length);
 
 const filmesPorGenero = computed(() => {
   return filmes.value.reduce((acc, filme) => {
-    const genero = filme.genero || 'Não categorizado';
-    if (!acc[genero]) {
-      acc[genero] = 0;
-    }
+    let genero = filme.genero?.trim() || 'Não categorizado';
+    genero = genero.charAt(0).toUpperCase() + genero.slice(1).toLowerCase();
+    if (!acc[genero]) acc[genero] = 0;
     acc[genero]++;
     return acc;
   }, {});
 });
 
-// Função para dar cores diferentes e aleatórias para os chips de gênero
-const colors = ['primary', 'secondary', 'success', 'warning', 'error', 'info', 'deep-purple-accent-4', 'pink-accent-3', 'teal', 'orange'];
-const getColorForGenre = (genero) => {
-  let hash = 0;
-  for (let i = 0; i < genero.length; i++) {
-    hash = genero.charCodeAt(i) + ((hash << 5) - hash);
+
+// --- NOVAS COMPUTEDS PARA ESTATÍSTICAS ---
+
+// 1. Média Geral de Notas
+const mediaGeralNotas = computed(() => {
+  if (totalFilmes.value === 0) return 'N/A';
+  const soma = filmes.value.reduce((acc, filme) => acc + Number(filme.nota), 0);
+  return (soma / totalFilmes.value).toFixed(1);
+});
+
+// 2. Gênero Favorito (Mais Cadastrado)
+const generoFavorito = computed(() => {
+  const generos = filmesPorGenero.value;
+  if (Object.keys(generos).length === 0) return 'N/A';
+  return Object.keys(generos).reduce((a, b) => generos[a] > generos[b] ? a : b);
+});
+
+// 3. Filmes com Maior e Menor Nota
+const melhoresFilmes = computed(() => {
+  if (totalFilmes.value === 0) return { nota: 'N/A', filmes: [] };
+  const maxNota = Math.max(...filmes.value.map(f => f.nota));
+  return {
+    nota: maxNota,
+    filmes: filmes.value.filter(f => f.nota == maxNota)
+  };
+});
+
+const pioresFilmes = computed(() => {
+  if (totalFilmes.value === 0) return { nota: 'N/A', filmes: [] };
+  const minNota = Math.min(...filmes.value.map(f => f.nota));
+  return {
+    nota: minNota,
+    filmes: filmes.value.filter(f => f.nota == minNota)
+  };
+});
+
+// 4. Média de Nota por Gênero
+const mediaPorGenero = computed(() => {
+  const generos = {};
+  filmes.value.forEach(filme => {
+    let genero = filme.genero?.trim() || 'Não categorizado';
+    genero = genero.charAt(0).toUpperCase() + genero.slice(1).toLowerCase();
+    if (!generos[genero]) {
+      generos[genero] = { soma: 0, contagem: 0 };
+    }
+    generos[genero].soma += Number(filme.nota);
+    generos[genero].contagem++;
+  });
+
+  const medias = {};
+  for (const genero in generos) {
+    medias[genero] = generos[genero].soma / generos[genero].contagem;
   }
-  const index = Math.abs(hash % colors.length);
-  return colors[index];
-};
+  return medias;
+});
+
+// 5. Distribuição das Notas
+const distribuicaoNotas = computed(() => {
+  const faixas = {
+    'Excelentes (9-10)': { contagem: 0, cor: 'success' },
+    'Muito Bons (7-8.9)': { contagem: 0, cor: 'teal' },
+    'Regulares (5-6.9)': { contagem: 0, cor: 'warning' },
+    'Fracos (< 5)': { contagem: 0, cor: 'error' },
+  };
+
+  filmes.value.forEach(filme => {
+    const nota = Number(filme.nota);
+    if (nota >= 9) faixas['Excelentes (9-10)'].contagem++;
+    else if (nota >= 7) faixas['Muito Bons (7-8.9)'].contagem++;
+    else if (nota >= 5) faixas['Regulares (5-6.9)'].contagem++;
+    else faixas['Fracos (< 5)'].contagem++;
+  });
+
+  return Object.entries(faixas).map(([faixa, dados]) => ({ faixa, ...dados }));
+});
 </script>
