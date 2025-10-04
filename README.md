@@ -45,7 +45,7 @@ T3. Biblioteca de Jogos/Filmes: CRUD de itens (título, gênero, nota); listagem
 
 ## Acessar a Aplicação
 
-A versão de produção deste projeto está disponível para acesso no seguinte link:
+A versão de produção deste projeto está disponível para acesso no link:
 
 **[https://avaliacao-fmds1.vercel.app/](https://avaliacao-fmds1.vercel.app/)**
 
