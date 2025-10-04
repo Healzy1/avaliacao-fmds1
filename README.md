@@ -43,6 +43,12 @@ T3. Biblioteca de Jogos/Filmes: CRUD de itens (título, gênero, nota); listagem
     ```
     A aplicação estará disponível em `http://localhost:3000` (ou em outra porta indicada no terminal).
 
+## Acessar a Aplicação
+
+A versão de produção deste projeto está disponível para acesso no seguinte link:
+
+**[https://avaliacao-fmds1.vercel.app/](https://avaliacao-fmds1.vercel.app/)**
+
 ## Estrutura do Projeto
 
 * **`/src/components`**: Contém os componentes reutilizáveis da aplicação, como `FilmeCard.vue`, `FilmeFormDialog.vue`, `ConfirmDialog.vue`, `MenuList.vue` e `AppFooter.vue`.
