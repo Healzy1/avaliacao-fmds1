@@ -41,7 +41,7 @@ Biblioteca de Jogos/Filmes: CRUD de itens (título, gênero, nota); listagem com
     ```bash
     npm run dev
     ```
-    A aplicação estará disponível em `http://localhost:3000` (ou em outra porta indicada no terminal).
+    A aplicação estará disponível em `http://localhost:3000` (ou em outra porta indicada no terminal, caso seja alterada).
 
 ## Acessar a Aplicação
 
