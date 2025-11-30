@@ -6,7 +6,7 @@ Aplicação web para catalogação e gerenciamento de uma biblioteca de filmes, 
 
 ## Tema Escolhido
 
-T3. Biblioteca de Jogos/Filmes: CRUD de itens (título, gênero, nota); listagem com busca e ordenação; página "Sobre" com estatísticas básicas (contagem por gênero).
+Biblioteca de Jogos/Filmes: CRUD de itens (título, gênero, nota); listagem com busca e ordenação; página "Sobre" com estatísticas básicas (contagem por gênero).
 
 ## Integrantes do Grupo
 
